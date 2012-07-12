@@ -7,12 +7,15 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <vector>
+#include "model/Board.h"
+
 namespace BlizzCheckers {
 
 
 // forward declarations
-class Board;
 class AsciiView;
+class Player;
 
 class Game
 {
@@ -20,6 +23,13 @@ public:
    //**************************************************************************
    // Public Constants
    //**************************************************************************
+
+   // Players for the game
+   enum PlayerChoice
+   {
+     HUMAN   = 0,
+     AI_RAND = 1,
+   };
 
    // Return values for play().
    // 0 == OK
@@ -30,7 +40,8 @@ public:
      PLAY_OK  = 0,
 
      // errors encountered during gameplay
-     PLAY_ERR = -1
+     PLAY_ERR     = -100,
+     PLAY_ERR_OOB = -101 // index out-of-bounds
    };
   
 
@@ -43,15 +54,16 @@ public:
    // initialize class configuration variables.
    //
    // Inputs:
-   //    None
+   //    whitePlayer - player type to play white pieces
+   //    blackPlayer - player type to play black pieces
    //
    // Outputs: 
    //    Nothing
    //
    // Exceptions:
-   //    None - Nothing
+   //    std:bad_alloc - failed new
    //-----------------------------------------------------------------------
-   Game(void);
+   Game(PlayerChoice blackPlayer, PlayerChoice whitePlayer);
 
    //-----------------------------------------------------------------------
    // Destructor
@@ -92,7 +104,24 @@ private:
    //**************************************************************************
    // Private Methods
    //**************************************************************************
-   //! TODO - any private methods?
+
+   //-----------------------------------------------------------------------
+   // Creates the specified player type and adds it to the _players vector.
+   //
+   // NOTE: _board must be initialized before this is called!
+   //
+   // Inputs:
+   //    player - see PlayerChoice enum for possiblities
+   //    playerColor - BLACK_PIECE or WHITE_PIECE
+   //
+   // Outputs: 
+   //    Nothing
+   //
+   // Exceptions:
+   //    bad_alloc - could not new memory for player object
+   //-----------------------------------------------------------------------
+   void addPlayer(PlayerChoice player, Board::BoardToken playerColor);
+   
 
    //**************************************************************************
    // Private Members
@@ -103,7 +132,9 @@ private:
 
    // the user interface
    AsciiView* _view;
-   
+
+   // the players
+   std::vector<Player*> _players;
 };
 
 } // end namespace BlizzCheckers

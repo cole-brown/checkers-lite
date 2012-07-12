@@ -1,19 +1,17 @@
 //******************************************************************************
 //
-// The AsciiView class proviews a text-based UI of the game to the user.
+// The AiRand class is a computer player that randomly selects from the
+// available valid moves.
 // 
 //*****************************************************************************
-#ifndef ASCIIVIEW_H
-#define ASCIIVIEW_H
+#ifndef AIRAND_H
+#define AIRAND_H
 
-// #include "something.h"
+#include "Player.h"
 
 namespace BlizzCheckers {
 
-// forward declarations
-class Board;
-
-class AsciiView
+class AiRand : public Player
 {
 public:
    //**************************************************************************
@@ -32,6 +30,7 @@ public:
    //
    // Inputs:
    //    checkersBoard - pointer to the checkers board
+   //    playerColor - BLACK_PIECE or WHITE_PIECE
    //
    // Outputs: 
    //    Nothing
@@ -39,26 +38,29 @@ public:
    // Exceptions:
    //    None - Nothing
    //-----------------------------------------------------------------------
-   AsciiView(Board* checkersBoard);
+   AiRand(Board* checkersBoard, Board::BoardToken playerColor);
 
    //-----------------------------------------------------------------------
    // Destructor
    //-----------------------------------------------------------------------
-   virtual ~AsciiView(void);
+   virtual ~AiRand(void);
 
    //-----------------------------------------------------------------------
-   // Draws the info line, board, and prompt to stdout.
+   // This function is how the AiRand takes their turn. This does not guarentee
+   // the turn is successful or valid. If turn was invalid, the AiRand should be
+   // informed and given another chance to take their turn.
    //
    // Inputs:
    //    None
    //
    // Outputs: 
-   //    Nothing
+   //    bool - true: successful, valid turn
+   //           false: invalid turn attempt or error along the way
    //
    // Exceptions:
    //    None - Nothing
    //-----------------------------------------------------------------------
-   void draw(void);
+   virtual bool turn(void);
    
 
 protected:
@@ -76,32 +78,15 @@ private:
    //**************************************************************************
    // Private Methods
    //**************************************************************************
-
-   //-----------------------------------------------------------------------
-   // Returns ASCII representation of the board token at the supplied location.
-   //
-   // Inputs:
-   //    row - row on the board
-   //    col - column on the board
-   //
-   // Outputs: 
-   //    char - ASCII character representing the token
-   //
-   // Exceptions:
-   //    None - Nothing
-   //-----------------------------------------------------------------------
-   char getTokenAt(unsigned int row, unsigned int col);
-   
+   //! TODO - any private methods?
 
    //**************************************************************************
    // Private Members
    //**************************************************************************
-
-   // the checkers board (not owned by this class)
-   Board* _board;
+   //!TODO - what kind of class ain't got no members?
    
 };
 
 } // end namespace BlizzCheckers
-#endif // ASCIIVIEW_H
+#endif // AIRAND_H
 

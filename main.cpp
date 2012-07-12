@@ -15,7 +15,7 @@ int main(int argc, const char* argv[])
 {
   try {
     // Create human vs computer game
-    Game* checkers = new Game(); //! TODO humans & computers
+    Game* checkers = new Game(Game::HUMAN, Game::AI_RAND);
     
     // Play the game!
     Game::PlayErrors retVal = checkers->play();

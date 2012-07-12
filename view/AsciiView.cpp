@@ -40,6 +40,10 @@ void AsciiView::draw(void)
    // TODO move these?
    static const char* INDENT = "   ";
 
+   // clear out previous draw
+   //! TODO system(CLEAR_CMD);
+   cout << "\n\n\n\n" << endl;
+
    // print out info line
    cout << "Red (X) moved h6 to g5.\n" << endl;
 
@@ -54,6 +58,7 @@ void AsciiView::draw(void)
       // loop through columns in row, printing out proper token.
       for (unsigned int col = 0; col < Board::MAX_WIDTH; col++)
       {
+         //! TODO check for invalid, return error.
          cout << getTokenAt(row,col) << " ";
       }
 

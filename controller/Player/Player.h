@@ -1,19 +1,16 @@
 //******************************************************************************
 //
-// The AsciiView class proviews a text-based UI of the game to the user.
+// The Player class models how players interact with the game.
 // 
 //*****************************************************************************
-#ifndef ASCIIVIEW_H
-#define ASCIIVIEW_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
-// #include "something.h"
+#include "Board.h"
 
 namespace BlizzCheckers {
 
-// forward declarations
-class Board;
-
-class AsciiView
+class Player
 {
 public:
    //**************************************************************************
@@ -32,6 +29,7 @@ public:
    //
    // Inputs:
    //    checkersBoard - pointer to the checkers board
+   //    playerColor - BLACK_PIECE or WHITE_PIECE
    //
    // Outputs: 
    //    Nothing
@@ -39,69 +37,46 @@ public:
    // Exceptions:
    //    None - Nothing
    //-----------------------------------------------------------------------
-   AsciiView(Board* checkersBoard);
+   Player(Board* checkersBoard, Board::BoardToken playerColor);
 
    //-----------------------------------------------------------------------
    // Destructor
    //-----------------------------------------------------------------------
-   virtual ~AsciiView(void);
+   virtual ~Player(void);
 
    //-----------------------------------------------------------------------
-   // Draws the info line, board, and prompt to stdout.
+   // This function is how the player takes their turn. This does not guarentee
+   // the turn is successful or valid. If turn was invalid, the player should be
+   // informed and given another chance to take their turn.
    //
    // Inputs:
    //    None
    //
    // Outputs: 
-   //    Nothing
+   //    bool - true: successful, valid turn
+   //           false: invalid turn attempt or error along the way
    //
    // Exceptions:
    //    None - Nothing
    //-----------------------------------------------------------------------
-   void draw(void);
-   
+   virtual bool turn(void) = 0;
+
+
+   //! TODO getColor()
+
 
 protected:
    //**************************************************************************
-   // Protected Methods
-   //**************************************************************************
-   //! TODO - anything protected?
-
-private:
-   //**************************************************************************
-   // Private Constants
-   //**************************************************************************
-   //! TODO - any consts?
-
-   //**************************************************************************
-   // Private Methods
+   // Protected Members
    //**************************************************************************
 
-   //-----------------------------------------------------------------------
-   // Returns ASCII representation of the board token at the supplied location.
-   //
-   // Inputs:
-   //    row - row on the board
-   //    col - column on the board
-   //
-   // Outputs: 
-   //    char - ASCII character representing the token
-   //
-   // Exceptions:
-   //    None - Nothing
-   //-----------------------------------------------------------------------
-   char getTokenAt(unsigned int row, unsigned int col);
-   
-
-   //**************************************************************************
-   // Private Members
-   //**************************************************************************
-
-   // the checkers board (not owned by this class)
+   // pointer to checkers board model (not owned by this class)
    Board* _board;
-   
+
+   // color pieces that this player is playing
+   Board::BoardToken _color;
 };
 
 } // end namespace BlizzCheckers
-#endif // ASCIIVIEW_H
+#endif // PLAYER_H
 
