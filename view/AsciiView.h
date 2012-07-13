@@ -6,12 +6,10 @@
 #ifndef ASCIIVIEW_H
 #define ASCIIVIEW_H
 
-// #include "something.h"
+#include <string>
+#include "Board.h"
 
 namespace BlizzCheckers {
-
-// forward declarations
-class Board;
 
 class AsciiView
 {
@@ -59,7 +57,22 @@ public:
    //    None - Nothing
    //-----------------------------------------------------------------------
    void draw(void);
-   
+
+   //-----------------------------------------------------------------------
+   // Prints out a this-is-a-new-game line. Note that draw() prints no
+   // info line initially, so call this.
+   //
+   // Inputs:
+   //    None
+   //
+   // Outputs: 
+   //    Nothing
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   void newGame(Board::BoardToken firstPlayer);
+
 
 protected:
    //**************************************************************************
@@ -78,11 +91,10 @@ private:
    //**************************************************************************
 
    //-----------------------------------------------------------------------
-   // Returns ASCII representation of the board token at the supplied location.
+   // Returns ASCII representation of the supplied board token.
    //
    // Inputs:
-   //    row - row on the board
-   //    col - column on the board
+   //    tok - BoardToken for which an ASCII char is needed
    //
    // Outputs: 
    //    char - ASCII character representing the token
@@ -90,8 +102,51 @@ private:
    // Exceptions:
    //    None - Nothing
    //-----------------------------------------------------------------------
-   char getTokenAt(unsigned int row, unsigned int col);
+   char tokenToChar(Board::BoardToken tok);
+
+   //-----------------------------------------------------------------------
+   // Returns a std::string pointer representing the player's piece's color.
+   //
+   // Inputs:
+   //    player - BoardToken of the player's
+   //
+   // Outputs: 
+   //    string* - "White", "Black", or "Invalid"
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   const std::string* const playerToStr(Board::BoardToken);
    
+   //-----------------------------------------------------------------------
+   // Prints line about who did what last move.
+   //
+   // Inputs:
+   //    None
+   //
+   // Outputs: 
+   //    Nothing
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   void printInfo(void);
+
+   //-----------------------------------------------------------------------
+   // Translates row/col into a-h/1-8 board coordinates.
+   //
+   // Inputs:
+   //    row - row
+   //    col - column
+   //
+   // Outputs: 
+   //    string - alphanumerical board coordinates (a1, h8, etc)
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   std::string toAlphaNum(unsigned int row, unsigned int col);
+
 
    //**************************************************************************
    // Private Members

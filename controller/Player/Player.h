@@ -61,8 +61,19 @@ public:
    //-----------------------------------------------------------------------
    virtual bool turn(void) = 0;
 
-
-   //! TODO getColor()
+   //-----------------------------------------------------------------------
+   // Returns the player's board piece color.
+   //
+   // Inputs:
+   //    None
+   //
+   // Outputs: 
+   //    BoardToken - BLACK_PIECE or WHITE_PIECE
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   Board::BoardToken color() { return _color; }
 
 
 protected:

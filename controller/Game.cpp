@@ -60,6 +60,7 @@ Game::PlayErrors Game::play(void)
    PlayErrors retVal = PLAY_OK;
 
    // initial display of UI
+   _view->newGame(_players[0]->color());
    _view->draw();
 
    // Main gameplay loop
@@ -67,8 +68,6 @@ Game::PlayErrors Game::play(void)
    vector<Player*>::iterator it = _players.begin();
    while (!done)
    {
-      done = true;
-
       // reset to first player if off the end of the vector
       if (it == _players.end())
       {
@@ -76,22 +75,29 @@ Game::PlayErrors Game::play(void)
       }
 
       // is turn possible?
-        
-      // let player take turn
-      bool turnResult = (*it)->turn();
-      if (turnResult)
+      if (_board->turnPossible((*it)->color()))
       {
-         // only move to next player if turn was valid move
+         // let player take turn
+         bool turnResult = (*it)->turn();
+         if (turnResult)
+         {
+            // only move to next player if turn was valid move
+            it++;
+         }
+      }
+      else
+      {
+         // That player's currently stuck. Let the next guy try.
          it++;
       }
         
       // check for end-of-game conditions (win/stalemate)
-
-      // check for errors
+      if (_board->state() < Board::GAME_PLAYABLE)
+      {
+         done = true;
+      }
 
       // update UI
-//      _view->setInfo();
-//      _view->setPrompt();
       _view->draw();
    }
 
@@ -115,7 +121,7 @@ void Game::addPlayer(PlayerChoice player, Board::BoardToken playerColor)
          newPlayer = (Player*) new AiRand(_board, playerColor);
          break;
       default:
-         //! TODO error case here
+         // Do nothing. Already NULL...
          break;
    }
 
@@ -123,7 +129,10 @@ void Game::addPlayer(PlayerChoice player, Board::BoardToken playerColor)
    {
      _players.push_back(newPlayer);
    }
-   //! TODO error case here for == NULL
+   else
+   {
+      throw 42;
+   }
 }
 
 

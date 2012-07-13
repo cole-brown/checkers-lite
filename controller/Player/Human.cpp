@@ -26,7 +26,6 @@ Human::Human(Board* checkersBoard, Board::BoardToken playerColor):
 //*****************************************************************************
 Human::~Human(void)
 {
-   //! TODO - Nothing to destruct?
    // Intentionally left blank.
 }
 
@@ -122,7 +121,8 @@ bool Human::turn(void)
      cout << "Valid format is a letter (a-h) followed immediately "
           << "by a number (1-8). Examples: a1, b8, h2, c5" << endl;
 
-     // No point continuing.
+     // Fake a move and return
+     _board->setLastMove(_color, Board::BAD_FORMAT);
      return false;
    }
 
@@ -147,7 +147,8 @@ bool Human::turn(void)
       }
       cout << "Select a square with one of your pieces on it." << endl;
 
-      return false;
+      // allow the move attempt anyways, so the board can record the failure
+      // and the view can print it out.
    }
 
    // make the move (board will not allow if invalid)

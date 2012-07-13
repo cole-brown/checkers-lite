@@ -62,6 +62,7 @@ public:
    //
    // Exceptions:
    //    std:bad_alloc - failed new
+   //    42 - hardcoded Human/AiRand players somehow changed...
    //-----------------------------------------------------------------------
    Game(PlayerChoice whitePlayer, PlayerChoice blackPlayer);
 
