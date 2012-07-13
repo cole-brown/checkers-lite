@@ -5,6 +5,7 @@
 //*****************************************************************************
 
 #include <iostream>
+#include <sstream>
 #include "Human.h"
 
 using namespace std;
@@ -33,7 +34,7 @@ Human::~Human(void)
 //*****************************************************************************
 // PRIVATE METHOD : getInput
 //*****************************************************************************
-bool Human::getInput(string& userInput)
+void Human::getInput(string& userInput)
 {
    static const string WHITESPACE = " \t\f\v\n\r";
 
@@ -51,7 +52,13 @@ bool Human::getInput(string& userInput)
    {
       userInput.clear(); // str is all whitespace
    }
+}
 
+//*****************************************************************************
+// PRIVATE METHOD : checkInput
+//*****************************************************************************
+bool Human::checkInput(string& userInput)
+{
    // check input format
    bool retVal = true;
    if (userInput.size() != 2)
@@ -93,19 +100,94 @@ unsigned int getRow(char row)
 
 
 //*****************************************************************************
+// PRIVATE METHOD : toAlphaNum
+//*****************************************************************************
+string Human::toAlphaNum(unsigned int row, unsigned int col)
+{
+   string retVal = "  ";
+
+   // set row char
+   retVal[1] = ('1' + Board::MAX_LENGTH - 1 - row);
+
+   // set col char
+   retVal[0] = ('a' + col);
+
+   return retVal;
+}
+
+
+//*****************************************************************************
+// PRIVATE METHOD : jumpTurn
+//*****************************************************************************
+bool Human::jumpTurn(vector<Board::BoardPos>* moves)
+{
+   static const char* INDENT = "   ";
+   
+   // give the user the news
+   bool plural = (moves->size() == 1) ? false : true;
+   cout << (plural ? "A jump is" : "Jumps are") << " possible and therefore "
+        << "MUST be taken.\n\nJumps:" << endl;
+
+   // list out the jumps possible...
+   unsigned int i = 0;
+   for (vector<Board::BoardPos>::iterator it = moves->begin();
+        it < moves->end();
+        it++)
+   {
+      cout << INDENT << "#" << i << ": " << toAlphaNum(it->_row, it->_col)
+           << " -> " << toAlphaNum(it->_toRow, it->_toCol) << endl;
+      i++;
+   }
+
+   // let user choose
+   cout << "Choose your jump move number (0-" << (moves->size()-1) << "): #";
+   string jumpStr;
+   getInput(jumpStr);
+
+   // figure out what they chose
+   unsigned int jump;
+   stringstream jss(jumpStr);
+   jss >> jump;
+
+   // validate
+   if (!(jump < moves->size()))
+   {
+     // Fake a move and return
+     _board->setLastMove(_color, Board::BAD_FORMAT);
+     return false;
+   }
+
+   // make the chosen move
+   return _board->move(_color, (*moves)[jump]._row, (*moves)[jump]._col)
+                ->to((*moves)[jump]._toRow, (*moves)[jump]._toCol);
+}
+
+
+//*****************************************************************************
 // PUBLIC METHOD : turn
 //*****************************************************************************
 bool Human::turn(void)
 {
-   //! TODO check for jumps that must be taken
+   // check for jumps that must be taken
+   vector<Board::BoardPos> moves;
+   _board->turnPossible(_color, &moves, true); // only jumps
+
+   // there is a jump
+   if (moves.size() > 0)
+   {
+     // so we must take it and skip the do-whatever phase, below.
+     return jumpTurn(&moves);
+   }
 
    // get user input for which piece to move where
    string move;
    string to;
    cout << "Select piece to move (e.g. a1): ";
-   bool moveGood = getInput(move);
+   getInput(move);
+   bool moveGood = checkInput(move); 
    cout << "Move to new location (e.g. b2): ";
-   bool toGood = getInput(to);
+   getInput(to);
+   bool toGood = checkInput(to);
 
    // validate input
    if (!moveGood)

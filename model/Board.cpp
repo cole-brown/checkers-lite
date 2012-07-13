@@ -91,7 +91,9 @@ Board::~Board(void)
 //*****************************************************************************
 // PUBLIC METHOD : turnPossible
 //*****************************************************************************
-bool Board::turnPossible(BoardToken player, std::vector<BoardPos>* moves)
+bool Board::turnPossible(BoardToken player,
+                         std::vector<BoardPos>* moves,
+                         bool onlyJumps)
 {
    bool retVal = false;
 
@@ -104,7 +106,7 @@ bool Board::turnPossible(BoardToken player, std::vector<BoardPos>* moves)
 
    BoardToken enemy = (player == BLACK_PIECE) ? WHITE_PIECE : BLACK_PIECE;
 
-   //! TODO remove couts
+   //! TODO remove cerrs
 
    // search the board for pieces
    vector<BoardPos> pieces; // all pieces
@@ -132,7 +134,7 @@ bool Board::turnPossible(BoardToken player, std::vector<BoardPos>* moves)
       BoardToken checkSquare = at(toRow, toCol);
       if (checkSquare == EMPTY_SQUARE)
       {
-         cout << it->_row << "," << it->_col << " can go lefty." << endl;
+         cerr << it->_row << "," << it->_col << " can go lefty." << endl;
          movablePieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -146,7 +148,7 @@ bool Board::turnPossible(BoardToken player, std::vector<BoardPos>* moves)
          toCol -= 1;
          if (at(toRow, toCol) == EMPTY_SQUARE)
          {
-            cout << it->_row << "," << it->_col << " can jump left!" << endl;
+            cerr << it->_row << "," << it->_col << " can jump left!" << endl;
             jumpPieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -161,7 +163,7 @@ bool Board::turnPossible(BoardToken player, std::vector<BoardPos>* moves)
       checkSquare = at(toRow, toCol);
       if (checkSquare == EMPTY_SQUARE)
       {
-         cout << it->_row << "," << it->_col << " can go righty." << endl;
+         cerr << it->_row << "," << it->_col << " can go righty." << endl;
          movablePieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -175,7 +177,7 @@ bool Board::turnPossible(BoardToken player, std::vector<BoardPos>* moves)
          toCol += 1;
          if (at(toRow, toCol) == EMPTY_SQUARE)
          {
-            cout << it->_row << "," << it->_col << " can jump right!" << endl;
+            cerr << it->_row << "," << it->_col << " can jump right!" << endl;
             jumpPieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -192,7 +194,7 @@ bool Board::turnPossible(BoardToken player, std::vector<BoardPos>* moves)
       {
          *moves = jumpPieces;
       }
-      else
+      else if (onlyJumps == false)
       {
          *moves = movablePieces;
       }
@@ -293,7 +295,7 @@ Board* Board::move(BoardToken mover, unsigned int row, unsigned int col)
 //*****************************************************************************
 bool Board::to(unsigned int row, unsigned int col)
 {
-   //! TODO remove couts
+   //! TODO remove cerrs
 
    // save off where they're trying to move to
    _info._endRow = row;
@@ -303,7 +305,7 @@ bool Board::to(unsigned int row, unsigned int col)
    if ((_info._mover != BLACK_PIECE) && (_info._mover != WHITE_PIECE))
    {
       _info._lastMove = INVALID_MOVER;
-      cout << "INVALID_MOVER" << endl;
+      cerr << "INVALID_MOVER" << endl;
       return false;
    }
    // boundry check
@@ -313,7 +315,7 @@ bool Board::to(unsigned int row, unsigned int col)
        (_info._startCol >= MAX_WIDTH))
    {
       _info._lastMove = OUT_OF_BOUNDS;
-      cout << "OUT_OF_BOUNDS" << endl;
+      cerr << "OUT_OF_BOUNDS" << endl;
       return false;      
    }
 
@@ -324,12 +326,12 @@ bool Board::to(unsigned int row, unsigned int col)
       if (pieceToMove == EMPTY_SQUARE)
       {
          _info._lastMove = EMPTY_START;
-         cout << "EMPTY_START" << endl;
+         cerr << "EMPTY_START" << endl;
       }
       else
       {
          _info._lastMove = ENEMY_START;
-         cout << "ENEMY_START" << endl;
+         cerr << "ENEMY_START" << endl;
       }
 
       return false;
@@ -339,13 +341,13 @@ bool Board::to(unsigned int row, unsigned int col)
    if ((_info._mover == BLACK_PIECE) && !(_info._startRow < row))
    {
       _info._lastMove = WRONG_DIRECTION;
-      cout << "WRONG_DIRECTION BLACK" << endl;
+      cerr << "WRONG_DIRECTION BLACK" << endl;
       return false;
    }
    if ((_info._mover == WHITE_PIECE) && !(_info._startRow > row))
    {
       _info._lastMove = WRONG_DIRECTION;
-      cout << "WRONG_DIRECTION WHITE" << endl;
+      cerr << "WRONG_DIRECTION WHITE" << endl;
       return false;
    }
 
@@ -356,7 +358,7 @@ bool Board::to(unsigned int row, unsigned int col)
    if (rowDist != colDist) // row/col dist differ (non-diagonal move)
    {
       _info._lastMove = BAD_MOVE_DIAG;
-      cout << "BAD_MOVE_DIAG" << endl;
+      cerr << "BAD_MOVE_DIAG" << endl;
       return false;
    }
 
@@ -365,7 +367,7 @@ bool Board::to(unsigned int row, unsigned int col)
        !((rowDist == 1) || (rowDist == 2)))   // col dist not 1 or 2
    {
       _info._lastMove = BAD_MOVE_DIST;
-      cout << "BAD_MOVE_DIST" << endl;
+      cerr << "BAD_MOVE_DIST" << endl;
       return false;
    }
 
@@ -376,14 +378,14 @@ bool Board::to(unsigned int row, unsigned int col)
    {
       // nope, they already have a piece there...
       _info._lastMove = OCCUPIED_SELF;
-      cout << "OCCUPIED_SELF" << endl;
+      cerr << "OCCUPIED_SELF" << endl;
       return false;
    }
    if (toLocation == enemy)
    {
       // nope, the bad guy's got his piece there...
       _info._lastMove = OCCUPIED_ENEMY;
-      cout << "OCCUPIED_ENEMY" << endl;
+      cerr << "OCCUPIED_ENEMY" << endl;
       return false;
    }
 
@@ -400,7 +402,7 @@ bool Board::to(unsigned int row, unsigned int col)
       jumpedRow = row + ((rowVec > 0) ? -1 : 1); 
       jumpedCol = col + ((colVec > 0) ? -1 : 1);
 
-      cout << "jump from " << _info._startRow << "," << _info._startCol
+      cerr << "jump from " << _info._startRow << "," << _info._startCol
            << " to " << row << "," << col
            << " will jump " << jumpedRow << "," << jumpedCol << endl;
 
@@ -408,7 +410,7 @@ bool Board::to(unsigned int row, unsigned int col)
       if (at(jumpedRow, jumpedCol) != enemy)
       {
          _info._lastMove = JUMPED_NON_ENEMY;
-         cout << "JUMPED_NON_ENEMY" << endl;
+         cerr << "JUMPED_NON_ENEMY" << endl;
          return false;
       }
    }

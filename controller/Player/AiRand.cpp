@@ -51,7 +51,6 @@ AiRand::AiRand(Board* checkersBoard, Board::BoardToken playerColor):
 //*****************************************************************************
 AiRand::~AiRand(void)
 {
-   //! TODO - Nothing to destruct?
    // Intentionally left blank.
 }
 
@@ -75,13 +74,6 @@ bool AiRand::turn(void)
         << "#" << x << "." << endl;
 
    // execute the move
-   //! TODO delete this debug stuff.
-   // cout << "moving from " << moves[x]._row << "," << moves[x]._col
-   //      << " to " << moves[x]._toRow << "," << moves[x]._toCol
-   //      << ". At start: " << _board->at(moves[x]._row, moves[x]._col)
-   //      <<
-
-   // return true;
    return _board->move(_color, moves[x]._row, moves[x]._col)
                 ->to(moves[x]._toRow, moves[x]._toCol);
 }

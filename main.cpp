@@ -19,32 +19,15 @@ int main(int argc, const char* argv[])
     
     // Play the game!
     Game::PlayErrors retVal = checkers->play();
-    
-    // error checks
-    switch (retVal)
-    {
-      case Game::PLAY_OK:
-        // do nothing
-        break;
-        
-      //! TODO specific errors
-      // case Game::PLAY_ERR:
-      //   cout << "Error playing checkers. Details details details."
-      //        << " Error number: " << retVal << endl;
-      //   break;
-        
-      default:
-        cout << "Unknown error. Error number: " << retVal << endl;
-        break;
-    }
-    
+
+    // and now it's done
     return (int)retVal;
   }
   catch (std::bad_alloc &e)
   {
     // newing something failed
     cout << "newing memory failed: " << e.what() << endl;
-    return -1; // TODO error code enum?
+    return -1;
   }
   catch (...)
   {

@@ -7,6 +7,7 @@
 #define HUMAN_H
 
 #include <string>
+#include <vector>
 #include "Player.h"
 
 namespace BlizzCheckers {
@@ -14,12 +15,6 @@ namespace BlizzCheckers {
 class Human : public Player
 {
 public:
-   //**************************************************************************
-   // Public Constants
-   //**************************************************************************
-   //! TODO - anything public?
-
-
    //**************************************************************************
    // Public Methods
    //**************************************************************************
@@ -63,18 +58,7 @@ public:
    virtual bool turn(void);
    
 
-protected:
-   //**************************************************************************
-   // Protected Methods
-   //**************************************************************************
-   //! TODO - anything protected?
-
 private:
-   //**************************************************************************
-   // Private Constants
-   //**************************************************************************
-   //! TODO - any consts?
-
    //**************************************************************************
    // Private Methods
    //**************************************************************************
@@ -87,18 +71,56 @@ private:
    //
    // Outputs: 
    //    userInput - trimmed string that user typed in
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   void getInput(std::string& userInput);
+
+   //-----------------------------------------------------------------------
+   // Verifies supplied string is in proper format  ([a-h][1-8])
+   //
+   // Inputs:
+   //    userInput - input to verify
+   //
+   // Outputs: 
    //    bool - true if input is proper format ([a-h][1-8]), false otherwise
    //
    // Exceptions:
    //    None - Nothing
    //-----------------------------------------------------------------------
-   bool getInput(std::string& userInput);
-   
+   bool checkInput(std::string& userInput);
 
-   //**************************************************************************
-   // Private Members
-   //**************************************************************************
-   //!TODO - what kind of class ain't got no members?
+   //-----------------------------------------------------------------------
+   // Translates row/col into a-h/1-8 board coordinates.
+   //
+   // Inputs:
+   //    row - row
+   //    col - column
+   //
+   // Outputs: 
+   //    string - alphanumerical board coordinates (a1, h8, etc)
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   std::string toAlphaNum(unsigned int row, unsigned int col);
+
+   //-----------------------------------------------------------------------
+   // Force the user to make a jump. Lists out the jumps and then asks
+   // the user to pick from them. Executes the chosen jump move.
+   //
+   // Inputs:
+   //    moves - vector of possible jumps
+   //
+   // Outputs: 
+   //    bool - true: successful, valid turn
+   //           false: invalid turn attempt or error along the way
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   bool jumpTurn(std::vector<Board::BoardPos>* moves);
    
 };
 

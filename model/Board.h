@@ -139,10 +139,16 @@ public:
    // currently stuck with no moves to make.
    //
    // If a moves vector is supplied, it will be filled with the possible moves.
-   // If jumps are possible, only the jumps will be supplied.
+   // If jumps are possible, only the jumps will be supplied. If jumps are not
+   // possible, then the possible normal moves will be supplied
+   //
+   // If onlyJumps is set to true, the moves vector will only ever be filled
+   // with jump moves. If no jump moves are possible, the vector will be
+   // untouched.
    //
    // Inputs:
    //    player - WHITE_PIECE or BLACK_PIECE
+   //    onlyJumps - true if only interested in jump moves
    //
    // Outputs: 
    //    bool  - true if possible, false if not
@@ -152,7 +158,9 @@ public:
    // Exceptions:
    //    None - Nothing
    //-----------------------------------------------------------------------
-   bool turnPossible(BoardToken player, std::vector<BoardPos>* moves = NULL);
+   bool turnPossible(BoardToken player,
+                     std::vector<BoardPos>* moves = NULL,
+                     bool onlyJumps = false);
 
    //-----------------------------------------------------------------------
    // Returns the games current state. Win, stalemate, or otherwise.
@@ -253,23 +261,7 @@ public:
    }
    
 
-protected:
-   //**************************************************************************
-   // Protected Methods
-   //**************************************************************************
-   //! TODO - anything protected?
-
 private:
-   //**************************************************************************
-   // Private Constants
-   //**************************************************************************
-   //! TODO - any consts?
-
-   //**************************************************************************
-   // Private Methods
-   //**************************************************************************
-   //! TODO - any private methods?
-
    //**************************************************************************
    // Private Members
    //**************************************************************************

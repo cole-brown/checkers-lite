@@ -62,7 +62,6 @@ void AsciiView::draw(void)
       // loop through columns in row, printing out proper token.
       for (unsigned int col = 0; col < Board::MAX_WIDTH; col++)
       {
-         //! TODO check for invalid, return error.
          cout << tokenToChar(_board->at(row, col)) << " ";
       }
 
