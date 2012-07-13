@@ -71,9 +71,6 @@ void AsciiView::draw(void)
    }
    cout << INDENT << "  +-----------------+\n"
         << INDENT << "    a b c d e f g h\n" << endl;
-
-   // print out the prompt
-//   cout << "Your move: ";
 }
 
 

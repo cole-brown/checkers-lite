@@ -397,8 +397,8 @@ bool Board::to(unsigned int row, unsigned int col)
       int colVec = (int)col - (int)_info._startCol; // of jump
       // +1 to destination if negative jump vector
       // or -1 to destination for positive jump vector
-      jumpedRow = row + ((rowVec < 0) ? -1 : 1); 
-      jumpedCol = col + ((colVec < 0) ? -1 : 1);
+      jumpedRow = row + ((rowVec > 0) ? -1 : 1); 
+      jumpedCol = col + ((colVec > 0) ? -1 : 1);
 
       cout << "jump from " << _info._startRow << "," << _info._startCol
            << " to " << row << "," << col
