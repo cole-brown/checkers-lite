@@ -63,7 +63,7 @@ public:
    // Exceptions:
    //    std:bad_alloc - failed new
    //-----------------------------------------------------------------------
-   Game(PlayerChoice blackPlayer, PlayerChoice whitePlayer);
+   Game(PlayerChoice whitePlayer, PlayerChoice blackPlayer);
 
    //-----------------------------------------------------------------------
    // Destructor

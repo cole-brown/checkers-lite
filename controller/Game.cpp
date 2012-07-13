@@ -18,7 +18,7 @@ namespace BlizzCheckers {
 //*****************************************************************************
 // PUBLIC CONSTRUCTOR : Game
 //*****************************************************************************
-Game::Game(PlayerChoice blackPlayer, PlayerChoice whitePlayer):
+Game::Game(PlayerChoice whitePlayer, PlayerChoice blackPlayer):
   _players()
 {
    // create the board
@@ -28,8 +28,8 @@ Game::Game(PlayerChoice blackPlayer, PlayerChoice whitePlayer):
    _view = new AsciiView(_board);
 
    // And now, the players!
-   addPlayer(blackPlayer, Board::BLACK_PIECE);
    addPlayer(whitePlayer, Board::WHITE_PIECE);
+   addPlayer(blackPlayer, Board::BLACK_PIECE);
 }
 
 

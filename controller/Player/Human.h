@@ -6,6 +6,7 @@
 #ifndef HUMAN_H
 #define HUMAN_H
 
+#include <string>
 #include "Player.h"
 
 namespace BlizzCheckers {
@@ -77,7 +78,22 @@ private:
    //**************************************************************************
    // Private Methods
    //**************************************************************************
-   //! TODO - any private methods?
+
+   //-----------------------------------------------------------------------
+   // Gets user's input from stdin and trims leading/trailing whitespace.
+   //
+   // Inputs:
+   //    None
+   //
+   // Outputs: 
+   //    userInput - trimmed string that user typed in
+   //    bool - true if input is proper format ([a-h][1-8]), false otherwise
+   //
+   // Exceptions:
+   //    None - Nothing
+   //-----------------------------------------------------------------------
+   bool getInput(std::string& userInput);
+   
 
    //**************************************************************************
    // Private Members

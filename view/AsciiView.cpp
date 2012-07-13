@@ -41,7 +41,7 @@ void AsciiView::draw(void)
    static const char* INDENT = "   ";
 
    // clear out previous draw
-   //! TODO system(CLEAR_CMD);
+   //! TODO? system(CLEAR_CMD);
    cout << "\n\n\n\n" << endl;
 
    // print out info line
@@ -69,7 +69,7 @@ void AsciiView::draw(void)
         << INDENT << "    a b c d e f g h\n" << endl;
 
    // print out the prompt
-   cout << "Your move: ";
+//   cout << "Your move: ";
 }
 
 
