@@ -10,7 +10,7 @@
 #include <vector>
 #include "Player.h"
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 class Human : public Player
 {
@@ -124,6 +124,6 @@ private:
    
 };
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 #endif // HUMAN_H
 

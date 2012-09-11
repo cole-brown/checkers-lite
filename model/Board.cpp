@@ -12,7 +12,7 @@
 
 using namespace std;
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 //*****************************************************************************
 // PUBLIC CONSTRUCTOR : Board
@@ -433,5 +433,5 @@ bool Board::to(unsigned int row, unsigned int col)
 
 
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 

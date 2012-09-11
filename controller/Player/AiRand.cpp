@@ -33,7 +33,7 @@ using namespace std;
 
 #endif
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 //*****************************************************************************
 // PUBLIC CONSTRUCTOR : AiRand
@@ -79,5 +79,5 @@ bool AiRand::turn(void)
 }
 
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 

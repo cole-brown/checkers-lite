@@ -8,7 +8,7 @@
 
 #include "model/Board.h"
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 class Player
 {
@@ -82,6 +82,6 @@ protected:
    Board::BoardToken _color;
 };
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 #endif // PLAYER_H
 

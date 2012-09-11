@@ -9,7 +9,7 @@
 
 #include "Player.h"
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 class AiRand : public Player
 {
@@ -58,6 +58,6 @@ public:
    
 };
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 #endif // AIRAND_H
 

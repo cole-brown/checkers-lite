@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "model/Board.h"
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 //*****************************************************************************
 // PUBLIC CONSTRUCTOR : Player
@@ -28,5 +28,5 @@ Player::~Player(void)
    // Intentionally left blank.
 }
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 

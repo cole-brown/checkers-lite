@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 //*****************************************************************************
 // PUBLIC CONSTRUCTOR : Human
@@ -237,5 +237,5 @@ bool Human::turn(void)
    return _board->move(_color, moveRow, moveCol)->to(toRow, toCol);
 }
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 

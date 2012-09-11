@@ -8,7 +8,7 @@
 
 #include <vector>
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 class Board
 {
@@ -275,6 +275,6 @@ private:
    MoveInfo _info;
 };
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 #endif // BOARD_H
 

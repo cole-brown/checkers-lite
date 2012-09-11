@@ -1,6 +1,6 @@
 //******************************************************************************
 //
-// Entry function for Blizzard Checkers Lite.
+// Entry function for Checkers Lite.
 // 
 //*****************************************************************************
 
@@ -9,7 +9,7 @@
 #include "controller/Game.h"
 
 using namespace std;
-using namespace BlizzCheckers;
+using namespace CheckersLite;
 
 int main(int argc, const char* argv[])
 {

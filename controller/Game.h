@@ -10,7 +10,7 @@
 #include <vector>
 #include "model/Board.h"
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 
 // forward declarations
@@ -127,6 +127,6 @@ private:
    std::vector<Player*> _players;
 };
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 #endif // GAME_H
 

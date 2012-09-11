@@ -9,7 +9,7 @@
 #include <string>
 #include "model/Board.h"
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 class AsciiView
 {
@@ -140,6 +140,6 @@ private:
    
 };
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 #endif // ASCIIVIEW_H
 

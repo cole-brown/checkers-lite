@@ -13,7 +13,7 @@
 
 using namespace std;
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 //*****************************************************************************
 // PUBLIC CONSTRUCTOR : Game
@@ -137,5 +137,5 @@ void Game::addPlayer(PlayerChoice player, Board::BoardToken playerColor)
 
 
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 

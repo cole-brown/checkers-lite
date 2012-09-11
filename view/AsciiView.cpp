@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace BlizzCheckers {
+namespace CheckersLite {
 
 //*****************************************************************************
 // PUBLIC CONSTRUCTOR : AsciiView
@@ -257,5 +257,5 @@ const string* const AsciiView::playerToStr(Board::BoardToken player)
 }
 
 
-} // end namespace BlizzCheckers
+} // end namespace CheckersLite
 
