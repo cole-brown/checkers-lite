@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <new>
 #include <vector>
-#include <iostream> //! TODO remove this
+//#include <iostream> // if you feel like seeing the paltry debugging..
 #include "Board.h"
 
 using namespace std;
@@ -106,8 +106,6 @@ bool Board::turnPossible(BoardToken player,
 
    BoardToken enemy = (player == BLACK_PIECE) ? WHITE_PIECE : BLACK_PIECE;
 
-   //! TODO remove cerrs
-
    // search the board for pieces
    vector<BoardPos> pieces; // all pieces
    vector<BoardPos> movablePieces; // pieces that have normal moves available
@@ -134,7 +132,7 @@ bool Board::turnPossible(BoardToken player,
       BoardToken checkSquare = at(toRow, toCol);
       if (checkSquare == EMPTY_SQUARE)
       {
-         cerr << it->_row << "," << it->_col << " can go lefty." << endl;
+         //DEBUG cerr << it->_row << "," << it->_col << " can go lefty." << endl;
          movablePieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -148,7 +146,7 @@ bool Board::turnPossible(BoardToken player,
          toCol -= 1;
          if (at(toRow, toCol) == EMPTY_SQUARE)
          {
-            cerr << it->_row << "," << it->_col << " can jump left!" << endl;
+            //DEBUG cerr << it->_row << "," << it->_col << " can jump left!" << endl;
             jumpPieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -163,7 +161,7 @@ bool Board::turnPossible(BoardToken player,
       checkSquare = at(toRow, toCol);
       if (checkSquare == EMPTY_SQUARE)
       {
-         cerr << it->_row << "," << it->_col << " can go righty." << endl;
+         //DEBUG cerr << it->_row << "," << it->_col << " can go righty." << endl;
          movablePieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -177,7 +175,7 @@ bool Board::turnPossible(BoardToken player,
          toCol += 1;
          if (at(toRow, toCol) == EMPTY_SQUARE)
          {
-            cerr << it->_row << "," << it->_col << " can jump right!" << endl;
+            //DEBUG cerr << it->_row << "," << it->_col << " can jump right!" << endl;
             jumpPieces.push_back(BoardPos(it->_row,
                                           it->_col,
                                           toRow,
@@ -295,8 +293,6 @@ Board* Board::move(BoardToken mover, unsigned int row, unsigned int col)
 //*****************************************************************************
 bool Board::to(unsigned int row, unsigned int col)
 {
-   //! TODO remove cerrs
-
    // save off where they're trying to move to
    _info._endRow = row;
    _info._endCol = col;
@@ -305,7 +301,7 @@ bool Board::to(unsigned int row, unsigned int col)
    if ((_info._mover != BLACK_PIECE) && (_info._mover != WHITE_PIECE))
    {
       _info._lastMove = INVALID_MOVER;
-      cerr << "INVALID_MOVER" << endl;
+      //DEBUG cerr << "INVALID_MOVER" << endl;
       return false;
    }
    // boundry check
@@ -315,7 +311,7 @@ bool Board::to(unsigned int row, unsigned int col)
        (_info._startCol >= MAX_WIDTH))
    {
       _info._lastMove = OUT_OF_BOUNDS;
-      cerr << "OUT_OF_BOUNDS" << endl;
+      //DEBUG cerr << "OUT_OF_BOUNDS" << endl;
       return false;      
    }
 
@@ -326,12 +322,12 @@ bool Board::to(unsigned int row, unsigned int col)
       if (pieceToMove == EMPTY_SQUARE)
       {
          _info._lastMove = EMPTY_START;
-         cerr << "EMPTY_START" << endl;
+         //DEBUG cerr << "EMPTY_START" << endl;
       }
       else
       {
          _info._lastMove = ENEMY_START;
-         cerr << "ENEMY_START" << endl;
+         //DEBUG cerr << "ENEMY_START" << endl;
       }
 
       return false;
@@ -341,13 +337,13 @@ bool Board::to(unsigned int row, unsigned int col)
    if ((_info._mover == BLACK_PIECE) && !(_info._startRow < row))
    {
       _info._lastMove = WRONG_DIRECTION;
-      cerr << "WRONG_DIRECTION BLACK" << endl;
+      //DEBUG cerr << "WRONG_DIRECTION BLACK" << endl;
       return false;
    }
    if ((_info._mover == WHITE_PIECE) && !(_info._startRow > row))
    {
       _info._lastMove = WRONG_DIRECTION;
-      cerr << "WRONG_DIRECTION WHITE" << endl;
+      //DEBUG cerr << "WRONG_DIRECTION WHITE" << endl;
       return false;
    }
 
@@ -358,7 +354,7 @@ bool Board::to(unsigned int row, unsigned int col)
    if (rowDist != colDist) // row/col dist differ (non-diagonal move)
    {
       _info._lastMove = BAD_MOVE_DIAG;
-      cerr << "BAD_MOVE_DIAG" << endl;
+      //DEBUG cerr << "BAD_MOVE_DIAG" << endl;
       return false;
    }
 
@@ -367,7 +363,7 @@ bool Board::to(unsigned int row, unsigned int col)
        !((rowDist == 1) || (rowDist == 2)))   // col dist not 1 or 2
    {
       _info._lastMove = BAD_MOVE_DIST;
-      cerr << "BAD_MOVE_DIST" << endl;
+      //DEBUG cerr << "BAD_MOVE_DIST" << endl;
       return false;
    }
 
@@ -378,14 +374,14 @@ bool Board::to(unsigned int row, unsigned int col)
    {
       // nope, they already have a piece there...
       _info._lastMove = OCCUPIED_SELF;
-      cerr << "OCCUPIED_SELF" << endl;
+      //DEBUG cerr << "OCCUPIED_SELF" << endl;
       return false;
    }
    if (toLocation == enemy)
    {
       // nope, the bad guy's got his piece there...
       _info._lastMove = OCCUPIED_ENEMY;
-      cerr << "OCCUPIED_ENEMY" << endl;
+      //DEBUG cerr << "OCCUPIED_ENEMY" << endl;
       return false;
    }
 
@@ -402,15 +398,15 @@ bool Board::to(unsigned int row, unsigned int col)
       jumpedRow = row + ((rowVec > 0) ? -1 : 1); 
       jumpedCol = col + ((colVec > 0) ? -1 : 1);
 
-      cerr << "jump from " << _info._startRow << "," << _info._startCol
-           << " to " << row << "," << col
-           << " will jump " << jumpedRow << "," << jumpedCol << endl;
+      //DEBUG s << "jump from " << _info._startRow << "," << _info._startCol
+      //     << " to " << row << "," << col
+      //     << " will jump " << jumpedRow << "," << jumpedCol << endl;
 
       // Did they actually jump an opponent's piece?
       if (at(jumpedRow, jumpedCol) != enemy)
       {
          _info._lastMove = JUMPED_NON_ENEMY;
-         cerr << "JUMPED_NON_ENEMY" << endl;
+         //DEBUG cerr << "JUMPED_NON_ENEMY" << endl;
          return false;
       }
    }

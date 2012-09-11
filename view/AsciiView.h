@@ -7,7 +7,7 @@
 #define ASCIIVIEW_H
 
 #include <string>
-#include "Board.h"
+#include "model/Board.h"
 
 namespace BlizzCheckers {
 

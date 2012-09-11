@@ -42,7 +42,7 @@ AiRand::AiRand(Board* checkersBoard, Board::BoardToken playerColor):
   Player(checkersBoard, playerColor)
 {
    // initialize random number generator
-   srand(time(0));
+   srand((unsigned int)time(0));
 }
 
 
